@@ -50,8 +50,8 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
                             <!-- imgs-zoom-area start -->
                             <div class="col-lg-5">
                                 <div class="imgs-zoom-area">
-                                    <img id="zoom_03" src="../uploads/<?php echo $thumbnail ?>"
-                                        data-zoom-image="../uploads/<?php echo $thumbnail ?>" alt="">
+                                    <img id="zoom_03" src="<?php echo $thumbnail ?>"
+    data-zoom-image="<?php echo $thumbnail ?>" alt="">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div id="gallery_01" class="carousel-btn slick-arrow-3 mt-30">

@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 $ROOT_URL = __DIR__ . "/../../../../";
 
 include $ROOT_URL . "/admin/models/connectdb.php";
@@ -67,7 +67,7 @@ foreach ($order_list as $order) {
     $result[] = $row;
 
 }
-
+ob_end_clean();
 echo json_encode(
     array(
         "order_list" => $result,
