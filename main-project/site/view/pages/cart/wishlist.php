@@ -254,7 +254,7 @@ foreach ($wish_list as $item) {
                                                             <tr>
                                                                 <td class="product-thumbnail">
                                                                 <div class="pro-thumbnail-img">
-                                                                    <img src="../../uploads/' . $item['hinh_anh'] . '" alt="' . $item['hinh_anh'] . '">
+                                                                    <img src="../uploads/' . $item['hinh_anh'] . '" alt="' . $item['hinh_anh'] . '">
                                                                 </div>
                                                                 <div class="pro-thumbnail-info text-start">
                                                                     <h6 class="product-title-2">

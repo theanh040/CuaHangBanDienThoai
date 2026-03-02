@@ -151,7 +151,7 @@ foreach ($list_blog as $blog) {
 
         if (substr($image_item, 0, 6) == "thumb-") {
             // echo $image_item;
-            $thumbnail = "../../uploads/" . $image_item;
+            $thumbnail = "../uploads/" . $image_item;
             break;
         }
     }
@@ -189,7 +189,7 @@ foreach ($list_blog as $blog) {
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="blog-image">
-                                    <a href="./index.php?act=blogdetail"><img src="../../uploads/blog-post-thumbnail-2.jpg"
+                                    <a href="./index.php?act=blogdetail"><img src="../uploads/blog-post-thumbnail-2.jpg"
                                             alt="blog-post-thumbnail-2.jpg"></a>
                                 </div>
                             </div>

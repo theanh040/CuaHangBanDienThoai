@@ -24,10 +24,11 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
     $new_price = number_format($product['don_gia'] * (1 - $product['giam_gia'] / 100));
 
     foreach ($image_list as $image_item) {
-
+        $image_item = trim($image_item);
+        // Fix double extensions like .jpg1
+        $image_item = preg_replace('/\.(jpg|jpeg|png|gif|webp)(\d+)$/i', '.$1', $image_item);
         if (substr($image_item, 0, 6) == "thumb-") {
-            // echo $image_item;
-            $thumbnail = "../../uploads/" . $image_item;
+            $thumbnail = "../uploads/" . $image_item;
             break;
         }
 
@@ -49,21 +50,22 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
                             <!-- imgs-zoom-area start -->
                             <div class="col-lg-5">
                                 <div class="imgs-zoom-area">
-                                    <img id="zoom_03" src="../../uploads/<?php echo $thumbnail ?>"
-                                        data-zoom-image="../../uploads/<?php echo $thumbnail ?>" alt="">
+                                    <img id="zoom_03" src="../uploads/<?php echo $thumbnail ?>"
+                                        data-zoom-image="../uploads/<?php echo $thumbnail ?>" alt="">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div id="gallery_01" class="carousel-btn slick-arrow-3 mt-30">
                                                 <?php
 // var_dump($image_list);
     foreach ($image_list as $image_item) {
-        $image_item = trim($image_item, " ");
+        $image_item = trim($image_item);
+        $image_item = preg_replace('/\.(jpg|jpeg|png|gif|webp)(\d+)$/i', '.$1', $image_item);
         # code...
         echo '
                                                         <div class="p-c">
-                                                            <a href="#" data-image="../../uploads/' . $image_item . '"
-                                                                data-zoom-image="../../uploads/' . $image_item . '">
-                                                                <img class="zoom_03" src="../../uploads/' . $image_item . '" alt="">
+                                                            <a href="#" data-image="../uploads/' . $image_item . '"
+                                                                data-zoom-image="../uploads/' . $image_item . '">
+                                                                <img class="zoom_03" src="../uploads/' . $image_item . '" alt="">
                                                             </a>
                                                         </div>
                                                         ';
@@ -327,17 +329,21 @@ $showcomment = showcommentproduct($product_id);
 
             // var_dump($images_review);
             foreach ($images_review as $image) {
+                $image = trim($image);
+                $image = preg_replace('/\.(jpg|jpeg|png|gif|webp)(\d+)$/i', '.$1', $image);
                 # code...
-                $image_reviews_html .= '<img class="ms-3" style="width: 100px; height: 100px; object-fit: cover" src="../../uploads/' . $image . '" alt="">';
+                $image_reviews_html .= '<img class="ms-3" style="width: 100px; height: 100px; object-fit: cover" src="../uploads/' . $image . '" alt="">';
             }
         } else {
-            $images_reviews_html = "";
+            $image_reviews_html = "";
         }
         $reply_review = reply_review_select_by_idreview($review['id_review']);
         if ($reply_review) {
+            $reply_img = trim($reply_review['hinh_anh']);
+            $reply_img = preg_replace('/\.(jpg|jpeg|png|gif|webp)(\d+)$/i', '.$1', $reply_img);
             $section_reply_review = '<div class="reply-review ml-50 d-flex mt-5">
             <div class="avatar-reply-user">
-                <img src="../../uploads/' . $reply_review['hinh_anh'] . '" alt="" style="width: 40px; height: 40px;">
+                <img src="../uploads/' . $reply_img . '" alt="" style="width: 40px; height: 40px;">
 
             </div>
 
@@ -354,11 +360,13 @@ $showcomment = showcommentproduct($product_id);
         // var_dump($reply_review);
         // var_dump($image_reviews_html);
         # code...
+        $review_img = trim($review['hinh_anh']);
+        $review_img = preg_replace('/\.(jpg|jpeg|png|gif|webp)(\d+)$/i', '.$1', $review_img);
         echo '
         <div class="media mt-30">
             <div class="media-left">
                 <!-- ảnh người đánh giá -->
-                <a href="#"><img style="width: 40px; height: 40px;" class="media-object" src="../../uploads/' . $review['hinh_anh'] . '" alt="#"></a>
+                <a href="#"><img style="width: 40px; height: 40px;" class="media-object" src="../uploads/' . $review_img . '" alt="#"></a>
             </div>
             <div class="media-body">
                 <div class="clearfix">

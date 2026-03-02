@@ -43,7 +43,7 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
     foreach ($image_list as $image_item) {
         if (substr($image_item, 0, 6) == "thumb-") {
             // echo $image_item;
-            $thumbnail = "../../uploads/" . $image_item;
+            $thumbnail = "../uploads/" . $image_item;
             break;
         }
 
@@ -305,7 +305,7 @@ foreach ($list_catename_blog as $items) {
 // foreach ($recent_blog as $blog) {
 //     if (substr($image_item, 0, 6) == "thumb-") {
 //         // echo $image_item;
-//         $thumbnail = "../../uploads/" . $image_item;
+//         $thumbnail = "../uploads/" . $image_item;
 //         break;
 //     }
 // }
@@ -320,7 +320,7 @@ foreach ($new_blog as $blog) {
 
         if (substr($image_item, 0, 6) == "thumb-") {
             // echo $image_item;
-            $thumbnail = "../../uploads/" . $image_item;
+            $thumbnail = "../uploads/" . $image_item;
             break;
         }
     }

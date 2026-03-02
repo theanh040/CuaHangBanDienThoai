@@ -12,7 +12,7 @@ if (isset($_SESSION['iduser'])) {
     $password = $user['mat_khau'];
 }
 
-$imgUrl = substr($user['hinh_anh'], 0, 4) == "http" ? $user['hinh_anh'] : "../../uploads/" . $user['hinh_anh'];
+$imgUrl = substr($user['hinh_anh'], 0, 4) == "http" ? $user['hinh_anh'] : "../uploads/" . $user['hinh_anh'];
 
 ?>
 <img src="<?php echo $imgUrl ?>" alt="fsdf" style="width: 8rem; height: 8rem; object-fit: cover; border-radius: 50%"

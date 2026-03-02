@@ -42,7 +42,7 @@ foreach ($product_list as $item) {
 
         if (substr($image_item, 0, 6) == "thumb-") {
             // echo $image_item;
-            $thumbnail = "../../uploads/" . $image_item;
+            $thumbnail = "../uploads/" . $image_item;
             break;
         }
 

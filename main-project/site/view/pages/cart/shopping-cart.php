@@ -115,7 +115,7 @@ if (count($cart_list) > 0) {
                                                         <tr class="product-item__row" data-id="' . $cart_item['id'] . '">
                                                                 <td class="product-thumbnail">
                                                                     <div class="pro-thumbnail-img">
-                                                                        <img src="../../uploads/' . $cart_item['hinh_anh'] . '" alt="' . $cart_item['hinh_anh'] . '">
+                                                                        <img src="../uploads/' . $cart_item['hinh_anh'] . '" alt="' . $cart_item['hinh_anh'] . '">
                                                                     </div>
                                                                     <div class="pro-thumbnail-info text-start">
                                                                         <h6 class="product-title-2">

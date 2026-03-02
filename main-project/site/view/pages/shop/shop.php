@@ -203,14 +203,20 @@ foreach ($product_list as $item) {
     $avg_stars = avg_star_reviews_of_product($item['masanpham']);
     $avg_stars = $avg_stars !== null ? $avg_stars : 0; // Default to 0 if null
     $result_stars = renderStarRatings(round($avg_stars, 0));
+    $thumbnail = '';
     foreach ($image_list as $image_item) {
-
+        $image_item = trim($image_item);
         if (substr($image_item, 0, 6) == "thumb-") {
-            // echo $image_item;
-            $thumbnail = "../../uploads/" . $image_item;
+            $thumbnail = "../uploads/" . $image_item;
             break;
         }
-
+    }
+    if (empty($thumbnail) && !empty($image_list)) {
+        $first_img = trim($image_list[0]);
+        if (!empty($first_img)) {
+            $first_img = preg_replace('/\.(jpg|jpeg|png|gif|webp)(\d+)$/i', '.$1', $first_img);
+            $thumbnail = "../uploads/" . $first_img;
+        }
     }
 
     # code...
@@ -243,7 +249,7 @@ foreach ($product_list as $item) {
 
         if (substr($image_item, 0, 6) == "thumb-") {
             // echo $image_item;
-            $thumbnail = "../../uploads/" . $image_item;
+            $thumbnail = "../uploads/" . $image_item;
             break;
         }
 
@@ -347,7 +353,7 @@ if ($current_page < $total_page && $total_page > 1) {
                         <div class="product-item product-best-sell">
                             <div class="product-img">
                                 <a href="index.php?act=detailproduct&id=<?php echo $product['idsanpham'] ?>">
-                                    <img src="../../uploads/<?php echo $product['hinhanh'] ?>" alt="">
+                                    <img src="../uploads/<?php echo $product['hinhanh'] ?>" alt="">
                                 </a>
                             </div>
                             <div class="product-info">

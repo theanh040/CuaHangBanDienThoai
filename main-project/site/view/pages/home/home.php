@@ -69,9 +69,7 @@ foreach ($cate_list as $cate_item) {
                 <div class="single-brand-product">
                     <a href="index.php?act=shop&cateid=' . $cate_item['ma_danhmuc'] . '"><img src="../uploads/' . $cate_item['hinh_anh'] . '"
                             alt=""></a>
-                    <h3 class="brand-title text-grey fw-bold fs-1">
-                        <a href="index.php?act=shop&cateid=' . $cate_item['ma_danhmuc'] . '">' . $cate_item['ten_danhmuc'] . '</a>
-                    </h3>
+                   
                 </div>
             </div>
         <!-- single-brand-product end -->
@@ -117,10 +115,11 @@ foreach ($featured_products as $item) {
     $avg_stars = avg_star_reviews_of_product($item['masanpham']);
     $avg_stars = $avg_stars !== null ? $avg_stars : 0; // Default to 0 if null
     $result_stars = renderStarRatings(round($avg_stars, 0));
+    $thumbnail = '';
     foreach ($image_list as $image_item) {
-
+        $image_item = trim($image_item);
+        $image_item = preg_replace('/\.(jpg|jpeg|png|gif|webp)(\d+)$/i', '.$1', $image_item);
         if (substr($image_item, 0, 6) == "thumb-") {
-            // echo $image_item;
             $thumbnail = "../uploads/" . $image_item;
             break;
         }
@@ -181,7 +180,7 @@ foreach ($featured_products as $item) {
 }
 ?>
 
-                        </div>
+zz                        </div>
                     </div>
                 </div>
             </div>
@@ -200,10 +199,11 @@ foreach ($get_new_banner_home as $banner) {
     extract($banner);
     // var_dump($banner);
     $image_list = explode(',', $banner['images']);
+    $thumbnail = '';
     foreach ($image_list as $image_item) {
-
+        $image_item = trim($image_item);
+        $image_item = preg_replace('/\.(jpg|jpeg|png|gif|webp)(\d+)$/i', '.$1', $image_item);
         if (substr($image_item, 0, 6) == "thumb-") {
-            // echo $image_item;
             $thumbnail = "../uploads/" . $image_item;
             $alt = $image_item;
             break;
@@ -556,7 +556,7 @@ if ($current_page < $total_page && $total_page > 1) {
 // B1: KET NOI CSDL
 $conn = connectdb();
 
-$sql = "SELECT masanpham, sp.don_gia as don_gia, ton_kho, giam_gia, sp.tensp as tensp, hinhanh as thumbnail, sum(soluong) as sl_ban, mo_ta, sp.ma_danhmuc as ma_danhmuc from tbl_order od inner join tbl_order_detail detail on od.id = detail.iddonhang inner join tbl_sanpham sp on sp.masanpham = detail.idsanpham where trangthai = 4 group by idsanpham order by sl_ban desc"; // Total Product
+$sql = "SELECT masanpham, sp.don_gia as don_gia, ton_kho, giam_gia, sp.tensp as tensp, sp.images as thumbnail, sum(soluong) as sl_ban, mo_ta, sp.ma_danhmuc as ma_danhmuc from tbl_order od inner join tbl_order_detail detail on od.id = detail.iddonhang inner join tbl_sanpham sp on sp.masanpham = detail.idsanpham where trangthai = 4 group by idsanpham order by sl_ban desc"; // Total Product
 $_limit = 12;
 $pagination = createDataWithPagination($conn, $sql, $_limit);
 $product_list = $pagination['datalist'];
@@ -579,17 +579,26 @@ foreach ($top_sold_products as $item) {
     $cate_name = catename_select_by_id($item['ma_danhmuc'])['ten_danhmuc'];
     $avg_stars = avg_star_reviews_of_product($item['masanpham']);
     $result_stars = renderStarRatings(round($avg_stars, 0));
-    // foreach ($image_list as $image_item) {
-
-    //     if (substr($image_item, 0, 6) == "thumb-") {
-    //         // echo $image_item;
-    //         $thumbnail = "../uploads/" . $image_item;
-    //         break;
-    // }
-
-    $thumbnail = $item['thumbnail'];
-
-    // }
+    
+    // Extract thumbnail from images string
+    $images_list = explode(',', $item['images']);
+    $thumbnail = '';
+    foreach ($images_list as $img) {
+        $img = trim($img);
+        if (empty($img) || !strpos($img, '.')) {
+            continue;
+        }
+        $img = preg_replace('/\.(jpg|jpeg|png|gif|webp)(\d+)$/i', '.$1', $img);
+        $thumbnail = $img;
+        break;
+    }
+    if (empty($thumbnail) && !empty($images_list)) {
+        $first_img = trim($images_list[0]);
+        if (!empty($first_img)) {
+            $first_img = preg_replace('/\.(jpg|jpeg|png|gif|webp)(\d+)$/i', '.$1', $first_img);
+            $thumbnail = $first_img;
+        }
+    }
 
     # code...
     echo '

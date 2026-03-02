@@ -28,8 +28,6 @@ if (isset($_POST['loginbtn']) && $_POST['loginbtn']) {
     // echo $password;
     if (!$error) {
         $password = md5($password);
-        // Debug: uncomment to see values
-        echo "Email: $email | Password Hash: $password";
         $islogined = checkuser2($email, $password);
         // echo $islogined;
         if ($islogined === -1) {

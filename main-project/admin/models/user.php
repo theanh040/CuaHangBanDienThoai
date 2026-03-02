@@ -32,8 +32,31 @@ function checkuser2($email, $password)
 
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $kq = $stmt->fetchAll();
-    echo "DEBUG checkuser2: Count = " . count($kq) . " | Email = $email | Password = $password";
-    var_dump($kq);
+    
+    // DEBUG
+    echo "=== DEBUG checkuser2 ===<br>";
+    echo "Email input: " . htmlspecialchars($email) . "<br>";
+    echo "Password hash input: " . htmlspecialchars($password) . "<br>";
+    echo "Found records: " . count($kq) . "<br>";
+    if (count($kq) > 0) {
+        echo "User found: " . $kq[0]['ho_ten'] . "<br>";
+        echo "DB password: " . $kq[0]['mat_khau'] . "<br>";
+        echo "vai_tro: " . $kq[0]['vai_tro'] . "<br>";
+    } else {
+        echo "User NOT found!<br>";
+        // Check if email exists
+        $sql2 = "SELECT * FROM tbl_nguoidung WHERE email = ?";
+        $stmt2 = $conn->prepare($sql2);
+        $stmt2->execute([$email]);
+        $stmt2->setFetchMode(PDO::FETCH_ASSOC);
+        $kq2 = $stmt2->fetchAll();
+        echo "Email exists in DB: " . (count($kq2) > 0 ? "YES" : "NO") . "<br>";
+        if (count($kq2) > 0) {
+            echo "DB password for this email: " . $kq2[0]['mat_khau'] . "<br>";
+        }
+    }
+    echo "===================<br>";
+    
     if (count($kq) > 0) {
         return $kq[0]['vai_tro'];
     } else {
@@ -66,8 +89,8 @@ function getuserinfo2($email, $password)
 {
     // $kq = '';
     $conn = connectdb();
-    $stmt = $conn->prepare("SELECT * FROM tbl_nguoidung WHERE email = '$email' AND mat_khau = '$password'");
-    $stmt->execute();
+    $stmt = $conn->prepare("SELECT * FROM tbl_nguoidung WHERE email = ? AND mat_khau = ?");
+    $stmt->execute([$email, $password]);
     // return $kq;
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $kq = $stmt->fetchAll();
@@ -183,6 +206,7 @@ function insertnewadmin($urlavatar, $name, $email, $phonenumber, $address, $user
 
 function updatepass($iduser, $newpass)
 {
+    $sql = "";
     try {
         $conn = connectdb();
         // set the PDO error mode to exception

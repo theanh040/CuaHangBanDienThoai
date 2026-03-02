@@ -85,12 +85,12 @@
                             <div class="top-link clearfix">
                                 <ul class="link f-right top-header-menu">
                                     <?php
-if (isset($_SESSION['iduser'])) {
+if (isset($_SESSION['iduser']) && isset($_SESSION['ho_ten'])) {
     echo '
                                             <li class="top-header-menu__item">
                                                 <a href="index.php?act=settingaccount">
                                                     <i class="zmdi zmdi-account"></i>
-                                                    ' . $_SESSION['ho_ten'] . '
+                                                    ' . htmlspecialchars($_SESSION['ho_ten']) . '
                                                 </a>
                                                 <ul class="top-header-menu__dropdown">
                                                     <li><a href="./index.php?act=settingaccount">Quản lý tài khoản</a> </li>

@@ -14,6 +14,20 @@ function checkuser($email, $password)
 
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $kq = $stmt->fetchAll();
+    
+    // DEBUG
+    echo "=== DEBUG checkuser (SITE) ===<br>";
+    echo "Email input: " . htmlspecialchars($email) . "<br>";
+    echo "Password hash input: " . htmlspecialchars($password) . "<br>";
+    echo "Found records: " . count($kq) . "<br>";
+    if (count($kq) > 0) {
+        echo "User found: " . $kq[0]['ho_ten'] . "<br>";
+        echo "vai_tro: " . $kq[0]['vai_tro'] . "<br>";
+    } else {
+        echo "User NOT found!<br>";
+    }
+    echo "===================<br>";
+    
     // Chưa check user
     if (count($kq) > 0) {
         // echo "kq: " . var_dump($kq);
